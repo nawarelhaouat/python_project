@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processed Images</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: linear-gradient(rgba(1, 1, 1, 0.95), rgba(0.5, 0.5, 0.5, 0.6)), 
+            url('../static/images/img1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom:40px;
+        }
+        .image-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .image-grid img {
+            width: 200px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 10px;
+        }
+        img:hover {
+            border-color: #6A082A;
+        }
+        .btn {
+            margin: 50px auto;
+            text-align: center;
+        }
+        .back-button {
+            text-decoration: none;
+            padding: 15px 50px;
+            border: 1px solid #6A082A;
+            background: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 20px;
+            
+        }
+        .back-button:hover {
+            background-color: #6A082A;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gallery</h1>
+    <div class="image-grid">
+        {% for image in images %}
+            <img src="{{ url_for('uploaded_file', filename=image) }}" alt="{{ image }}">
+        {% endfor %}
+    </div>
+    <div class="btn">
+        <a href="{{ url_for('index') }}" class="back-button">Back to Home</a>
+    </div>
+</body>
+</html>

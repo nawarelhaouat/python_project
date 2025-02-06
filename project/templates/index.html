@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image/Audio Manipulation Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: linear-gradient(rgba(1, 1, 1, 0.95), rgba(0.5, 0.5, 0.5, 0.6)), 
+            url('../static/images/img1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+        a {
+            text-decoration: none;
+            color: white;
+        }
+        nav {
+            width: 100%;
+            display: flex;
+            
+        }
+        nav h1 {
+            width: 40%;
+            padding: 20px 40px;
+        }
+        nav ul {
+            width: 60%;
+            display: inline-block;
+            text-align: center;
+            
+
+        }
+        nav ul li {
+            display: inline-block;
+            list-style: none;
+            margin: 20px 40px;
+            padding: 10px;
+            font-weight: bold;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .container h1{
+            font-size: 70px;
+            width: 100%;
+            text-align: center;
+            letter-spacing: 10px;
+            font-family: 'Broadway';
+            margin: 20px auto;
+        }
+        .container p {
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 25px;
+            font-size: 16px;
+            line-height: 25px;
+        }
+        .forms {
+            display: flex;
+            width: 100%;
+        }
+        button {
+            padding: 15px 30px;
+            border: 1px solid burlywood;
+            background: none;
+            margin: 20px;
+            color: white;
+            font-weight: bold;
+            border-radius: 20px;
+        }
+        footer {
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        footer p {
+            margin-left: 20px;
+        }
+
+        input[type="file"] {
+            display: none;
+         }
+
+        .custom-file-input {
+            padding: 15px 30px;
+            border: 1px solid #6A082A;
+            background: none;
+            margin: 20px;
+            color: white;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+    button[type="submit"], .menu-item {
+        padding: 15px 30px;
+        border: 1px solid #6A082A;
+        background: none;
+        margin: 10px;
+        color: white;
+        font-weight: bold;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+    button[type="submit"]:hover, .menu-item:hover{
+        background-color: #6A082A;
+    }
+
+
+        
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>Digital creativity</h1>
+        <ul>
+            <li><a style="color: #6A082A;" href="#">Home</a></li>
+            <li><a href="{{ url_for('view_images') }}">Gallery</a></li>            <li><a href="#">Account</a></li>
+        </ul>
+    </nav>
+
+    <section style="display:flex;width:100%;">
+        <div class="container">
+            <h1>Generative  <br> Gallery</h1>
+            <p>Welcome to Generative Gallery , an interactive platform where you can unleash your artistic vision. This gallery allows you to create, modify, and explore generative art and data visualizations with ease. Use our interactive tools to draw, add shapes, change colors, and apply filters to your images. Upload your own images and audio files to see them transformed into unique visual representations. Navigate through the gallery, interact with your creations, and experiment with different styles. Whether you're an artist, designer, or just exploring creativity, this space is designed for you. Start creating and let your imagination flow!</p>
+        </div>
+   <!--     <div style="width:40%;position:relative;">
+            <img style="width:80%;height:500px;margin: 0 0 0 -40px;position:absolute;right:0;display:left;" src="../static/images/pp.png">
+
+        </div> -->
+    </section>
+    <section class="forms">
+        <form action="/upload_image" method="post" enctype="multipart/form-data">
+            <input type="file" name="image" id="file" accept="image/*">
+            <label style="background-color: #6A082A;" for="file" class="custom-file-input">Choose an Image</label>
+            <button type="submit">Upload Image</button>
+        </form>
+        
+        <form class="/upload-form" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" id="file1" accept="audio/*" required>
+            <label style="background-color: #6A082A;" for="file1" class="custom-file-input">Choose an Audio File</label>
+            <button type="submit" class="button">Upload Audio</button>
+         </form>
+
+
+        <!--
+          <form class="upload-form" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept="audio/*" required>
+            <button type="submit" class="button">Upload Audio</button>
+        </form>
+    -->
+        <a href="/visualization" class="menu-item">View Data Visualisation</a>
+
+        <a href="/draw" class="menu-item">Generate Art</a>
+
+      <!--  <form action="/upload_image" method="post" enctype="multipart/form-data">
+            <button type="submit">View Data Visualisation</button>
+        </form>
+        <form action="/upload_image" method="post" enctype="multipart/form-data">
+            <button type="submit">Generate Art</button>
+        </form>
+        -->
+    </section>
+
+    <footer>
+        <p>&copy 2025 by Nawar El Haouat & Nada El Oukili</p>
+    </footer>
+</body>
+</html>

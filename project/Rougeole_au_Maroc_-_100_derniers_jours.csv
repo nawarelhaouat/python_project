@@ -1,0 +1,101 @@
+Date,Region,Cas_Rouge,Deces,Taux_Vacc,Source_Inf,Mesures_Gouvernementales
+2024-10-26,Marrakech-Safi,25,3,53.92,OMS,Sensibilisation
+2024-10-27,L'Oriental,271,5,63.91,Institut National de Santé,Campagne de vaccination
+2024-10-28,Casablanca-Settat,356,11,71.92,Ministère de la Santé,Campagne de vaccination
+2024-10-29,Rabat-Salé-Kénitra,72,11,45.67,Presse locale,Mesures sanitaires renforcées
+2024-10-30,Casablanca-Settat,18,0,85.43,OMS,Renforcement des hôpitaux
+2024-10-31,Drâa-Tafilalet,391,1,90.37,Institut National de Santé,Sensibilisation
+2024-11-01,Tanger-Tétouan-Al Hoceima,91,10,59.84,Presse locale,Mesures sanitaires renforcées
+2024-11-02,Béni Mellal-Khénifra,48,1,83.78,Ministère de la Santé,Renforcement des hôpitaux
+2024-11-03,Souss-Massa,10,4,65.73,OMS,Sensibilisation
+2024-11-04,L'Oriental,228,4,45.89,Ministère de la Santé,Sensibilisation
+2024-11-05,Béni Mellal-Khénifra,302,1,77.83,OMS,Sensibilisation
+2024-11-06,Drâa-Tafilalet,434,3,69.84,OMS,Sensibilisation
+2024-11-07,Casablanca-Settat,50,1,76.07,OMS,Sensibilisation
+2024-11-08,Drâa-Tafilalet,472,18,54.0,OMS,Sensibilisation
+2024-11-09,Fès-Meknès,330,1,86.71,OMS,Campagne de vaccination
+2024-11-10,Béni Mellal-Khénifra,132,11,61.4,Ministère de la Santé,Renforcement des hôpitaux
+2024-11-11,Drâa-Tafilalet,401,3,91.01,OMS,Sensibilisation
+2024-11-12,Casablanca-Settat,367,5,48.8,Institut National de Santé,Mesures sanitaires renforcées
+2024-11-13,Tanger-Tétouan-Al Hoceima,92,3,87.08,Presse locale,Sensibilisation
+2024-11-14,Souss-Massa,36,4,47.4,Institut National de Santé,Campagne de vaccination
+2024-11-15,Rabat-Salé-Kénitra,291,19,68.08,Institut National de Santé,Sensibilisation
+2024-11-16,Tanger-Tétouan-Al Hoceima,288,3,76.55,Institut National de Santé,Campagne de vaccination
+2024-11-17,Tanger-Tétouan-Al Hoceima,286,11,50.83,Institut National de Santé,Campagne de vaccination
+2024-11-18,Rabat-Salé-Kénitra,344,7,66.64,OMS,Campagne de vaccination
+2024-11-19,L'Oriental,405,2,72.4,Presse locale,Mesures sanitaires renforcées
+2024-11-20,Béni Mellal-Khénifra,77,15,89.61,Ministère de la Santé,Renforcement des hôpitaux
+2024-11-21,Casablanca-Settat,55,7,60.55,Presse locale,Campagne de vaccination
+2024-11-22,Béni Mellal-Khénifra,364,0,45.9,Ministère de la Santé,Sensibilisation
+2024-11-23,Souss-Massa,141,18,76.14,Presse locale,Sensibilisation
+2024-11-24,Rabat-Salé-Kénitra,470,1,69.07,Institut National de Santé,Mesures sanitaires renforcées
+2024-11-25,L'Oriental,404,15,76.5,Institut National de Santé,Renforcement des hôpitaux
+2024-11-26,Fès-Meknès,60,11,88.27,Presse locale,Renforcement des hôpitaux
+2024-11-27,Tanger-Tétouan-Al Hoceima,239,16,40.25,Institut National de Santé,Sensibilisation
+2024-11-28,Casablanca-Settat,411,6,77.84,Presse locale,Sensibilisation
+2024-11-29,Tanger-Tétouan-Al Hoceima,222,2,62.44,Institut National de Santé,Mesures sanitaires renforcées
+2024-11-30,L'Oriental,265,8,51.45,Presse locale,Sensibilisation
+2024-12-01,Drâa-Tafilalet,270,15,58.65,Ministère de la Santé,Campagne de vaccination
+2024-12-02,Marrakech-Safi,485,8,68.93,Presse locale,Renforcement des hôpitaux
+2024-12-03,L'Oriental,349,7,49.6,Ministère de la Santé,Sensibilisation
+2024-12-04,Souss-Massa,495,4,61.32,OMS,Mesures sanitaires renforcées
+2024-12-05,Drâa-Tafilalet,280,20,65.33,OMS,Sensibilisation
+2024-12-06,Souss-Massa,461,6,41.56,Institut National de Santé,Renforcement des hôpitaux
+2024-12-07,Rabat-Salé-Kénitra,45,1,90.89,Institut National de Santé,Campagne de vaccination
+2024-12-08,Drâa-Tafilalet,308,1,53.9,Institut National de Santé,Renforcement des hôpitaux
+2024-12-09,Drâa-Tafilalet,274,7,57.91,Ministère de la Santé,Mesures sanitaires renforcées
+2024-12-10,Tanger-Tétouan-Al Hoceima,90,16,59.97,Ministère de la Santé,Campagne de vaccination
+2024-12-11,Rabat-Salé-Kénitra,421,1,42.6,Institut National de Santé,Renforcement des hôpitaux
+2024-12-12,Béni Mellal-Khénifra,334,2,52.4,OMS,Mesures sanitaires renforcées
+2024-12-13,Rabat-Salé-Kénitra,307,1,57.48,Institut National de Santé,Sensibilisation
+2024-12-14,Marrakech-Safi,166,12,60.97,Institut National de Santé,Sensibilisation
+2024-12-15,L'Oriental,499,10,56.0,Ministère de la Santé,Mesures sanitaires renforcées
+2024-12-16,Marrakech-Safi,69,12,67.9,Institut National de Santé,Renforcement des hôpitaux
+2024-12-17,Béni Mellal-Khénifra,56,1,74.81,Ministère de la Santé,Mesures sanitaires renforcées
+2024-12-18,Béni Mellal-Khénifra,282,8,93.09,Ministère de la Santé,Campagne de vaccination
+2024-12-19,L'Oriental,288,13,49.03,OMS,Mesures sanitaires renforcées
+2024-12-20,Rabat-Salé-Kénitra,80,15,57.75,Presse locale,Campagne de vaccination
+2024-12-21,Marrakech-Safi,313,12,66.23,Ministère de la Santé,Mesures sanitaires renforcées
+2024-12-22,Drâa-Tafilalet,81,4,41.58,Presse locale,Campagne de vaccination
+2024-12-23,Marrakech-Safi,102,16,53.03,OMS,Mesures sanitaires renforcées
+2024-12-24,Marrakech-Safi,7,3,90.06,Ministère de la Santé,Sensibilisation
+2024-12-25,Marrakech-Safi,387,1,81.63,Ministère de la Santé,Campagne de vaccination
+2024-12-26,L'Oriental,399,8,85.12,OMS,Mesures sanitaires renforcées
+2024-12-27,Fès-Meknès,36,2,89.79,Ministère de la Santé,Campagne de vaccination
+2024-12-28,Béni Mellal-Khénifra,64,19,56.31,Institut National de Santé,Mesures sanitaires renforcées
+2024-12-29,Casablanca-Settat,196,15,85.78,Presse locale,Campagne de vaccination
+2024-12-30,Fès-Meknès,34,2,86.81,Presse locale,Sensibilisation
+2024-12-31,Marrakech-Safi,406,17,75.86,Presse locale,Mesures sanitaires renforcées
+2025-01-01,Rabat-Salé-Kénitra,18,1,48.69,Presse locale,Campagne de vaccination
+2025-01-02,Rabat-Salé-Kénitra,274,0,79.65,OMS,Campagne de vaccination
+2025-01-03,Drâa-Tafilalet,208,11,42.7,Presse locale,Renforcement des hôpitaux
+2025-01-04,Béni Mellal-Khénifra,186,0,67.96,Ministère de la Santé,Campagne de vaccination
+2025-01-05,Rabat-Salé-Kénitra,261,2,51.92,Presse locale,Campagne de vaccination
+2025-01-06,Béni Mellal-Khénifra,37,0,42.05,Ministère de la Santé,Campagne de vaccination
+2025-01-07,Souss-Massa,93,7,93.97,Institut National de Santé,Campagne de vaccination
+2025-01-08,Tanger-Tétouan-Al Hoceima,18,3,48.68,Institut National de Santé,Campagne de vaccination
+2025-01-09,Souss-Massa,282,4,50.0,Presse locale,Campagne de vaccination
+2025-01-10,Drâa-Tafilalet,94,16,62.51,Ministère de la Santé,Mesures sanitaires renforcées
+2025-01-11,Marrakech-Safi,72,17,79.47,Institut National de Santé,Renforcement des hôpitaux
+2025-01-12,Marrakech-Safi,171,1,89.6,Ministère de la Santé,Sensibilisation
+2025-01-13,Tanger-Tétouan-Al Hoceima,9,3,90.27,Ministère de la Santé,Renforcement des hôpitaux
+2025-01-14,L'Oriental,14,1,58.16,OMS,Sensibilisation
+2025-01-15,Rabat-Salé-Kénitra,259,8,52.87,Institut National de Santé,Mesures sanitaires renforcées
+2025-01-16,Rabat-Salé-Kénitra,346,10,63.6,OMS,Campagne de vaccination
+2025-01-17,Casablanca-Settat,94,16,74.45,Presse locale,Campagne de vaccination
+2025-01-18,Marrakech-Safi,306,19,48.21,OMS,Mesures sanitaires renforcées
+2025-01-19,Drâa-Tafilalet,448,18,67.87,OMS,Mesures sanitaires renforcées
+2025-01-20,Marrakech-Safi,178,1,47.35,OMS,Renforcement des hôpitaux
+2025-01-21,Drâa-Tafilalet,147,11,89.43,Ministère de la Santé,Campagne de vaccination
+2025-01-22,Rabat-Salé-Kénitra,470,5,90.23,Ministère de la Santé,Sensibilisation
+2025-01-23,L'Oriental,306,10,59.34,Presse locale,Mesures sanitaires renforcées
+2025-01-24,Fès-Meknès,154,5,52.52,OMS,Renforcement des hôpitaux
+2025-01-25,Marrakech-Safi,396,8,88.38,Institut National de Santé,Renforcement des hôpitaux
+2025-01-26,Tanger-Tétouan-Al Hoceima,143,9,79.28,Presse locale,Sensibilisation
+2025-01-27,Béni Mellal-Khénifra,282,15,72.19,Institut National de Santé,Campagne de vaccination
+2025-01-28,Casablanca-Settat,327,4,79.12,Institut National de Santé,Campagne de vaccination
+2025-01-29,Drâa-Tafilalet,197,11,89.12,Ministère de la Santé,Renforcement des hôpitaux
+2025-01-30,Casablanca-Settat,22,1,52.45,Ministère de la Santé,Sensibilisation
+2025-01-31,Drâa-Tafilalet,277,19,49.85,Ministère de la Santé,Sensibilisation
+2025-02-01,Drâa-Tafilalet,73,14,90.31,OMS,Mesures sanitaires renforcées
+2025-02-02,Tanger-Tétouan-Al Hoceima,232,0,40.14,Institut National de Santé,Campagne de vaccination

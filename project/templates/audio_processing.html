@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Processing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(rgba(1, 1, 1, 0.95), rgba(0.5, 0.5, 0.5, 0.7)), 
+            url('../static/images/img1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+        .container {
+            margin: 0 auto;
+            text-align: center;
+        }
+        h1, p {
+            margin-top: 30px;
+        }
+        p {
+            margin-bottom: 80px;
+        }
+        h2 {
+            margin-top: 40px;
+            color: #6A082A;
+        }
+        .button {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border: 1px solid #6A082A;
+            background: none;
+            margin: 40px 20px;
+            font-weight: bold;
+            border-radius: 20px;
+        }
+        .button:hover {
+            background-color: #6A082A;
+        }
+        .btn {
+            margin: 50px auto;
+            text-align: center;
+        }
+        .back-button {
+            text-decoration: none;
+            padding: 15px 50px;
+            font-weight: bold;
+            font-size: 16px;
+            color:white;
+            
+        }
+        .back-button:hover {
+            color: #6A082A;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Audio Processing</h1>
+        <p>Uploaded File: {{ filename }}</p>
+
+        <!-- Apply Effects -->
+        <h2>Apply Effects</h2>
+        <a href="{{ url_for('apply_audio_effect', effect='speed_up', filename=filename) }}" class="button">Speed Up</a>
+        <a href="{{ url_for('apply_audio_effect', effect='fade', filename=filename) }}" class="button">Fade</a>
+        <a href="{{ url_for('apply_audio_effect', effect='reverse', filename=filename) }}" class="button">Reverse</a>
+        <a href="{{ url_for('apply_audio_effect', effect='louder', filename=filename) }}" class="button">Louder</a>
+
+        <!-- Generate Soundscape -->
+        <h2>Generate Soundscape</h2>
+        <a href="{{ url_for('generate_audio_soundscape') }}" class="button">Generate Soundscape</a>
+    </div>
+    <div class="btn">
+        <a href="{{ url_for('index') }}" class="back-button">Back to Home</a>
+    </div>
+</body>
+</html>
