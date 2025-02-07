@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.animation as animation
 from mpl_toolkits.mplot3d import Axes3D
+import tkinter as tk
 
 # Charger les données
 file_path = "Rougeole_au_Maroc_-_100_derniers_jours.csv"
@@ -16,11 +17,15 @@ df["Date_Index"] = df["Date"].astype("category").cat.codes
 # Liste des noms des régions
 region_labels = df["Region"].astype("category").cat.categories
 
-# Création de la figure et des axes
-fig = plt.figure(figsize=(16, 8))  # 🔹 Augmenter la taille globale
+# 🔹 Taille de la figure adaptée
+fig = plt.figure(figsize=(15, 5))  # Ajustez la taille de la figure
 
 # Axe principal 3D
 ax = fig.add_subplot(111, projection='3d')
+
+# 🔹 Réduire la taille du graphe et bien le centrer
+ax.set_position([0.58, 0.4, 0.3, 0.3])  # Ajustement pour réduire et bien centrer
+ax.set_box_aspect([0.5, 0.5, 0.5])  # Réduction équilibrée du graphe
 
 # Variables pour le graphique
 x = df["Region_Index"]
@@ -36,24 +41,52 @@ ax.set_ylabel("Jour")
 ax.set_zlabel("Cas de Rougeole")
 ax.set_title("Les Cas de Rougeole au Maroc")
 
-# Ajouter la barre des couleurs à droite (Nombre de Cas)
-cbar = fig.colorbar(surf, ax=ax, shrink=0.5, aspect=10)
-cbar.set_label("Nombre de Cas", color='black')
-cbar.ax.yaxis.label.set_color('black')
-cbar.ax.tick_params(colors='black')
+# Ajouter la barre des couleurs à droite (Nombre de Cas) et la déplacer un peu plus à droite
+cbar = fig.colorbar(surf, ax=ax, shrink=0.4, aspect=8, pad=0.05)  # Ajusté avec un 'pad' plus grand
 
-# 🔹 AJOUTER UN TABLEAU D’INDEX DES RÉGIONS À GAUCHE (AGRANDI) 🔹
+cbar.set_label("Nombre de Cas", color='white', fontweight='bold')
+cbar.ax.yaxis.label.set_color('white')
+cbar.ax.tick_params(colors='white')
+
+# 🔹 AJOUTER UN TABLEAU D’INDEX DES RÉGIONS À GAUCHE 🔹
 table_data = [[idx, region] for idx, region in enumerate(region_labels)]
-table_ax = fig.add_axes([0.02, 0.2, 0.15, 0.6])  # 🔹 Élargir la table ([x, y, largeur, hauteur])
+table_ax = fig.add_axes([0.05, 0.2, 0.2, 0.6])  # Ajustez la position et la taille du tableau
 table_ax.axis("off")  # Cacher l'axe
 
-# Affichage du tableau plus grand et plus lisible
+# Affichage du tableau
 table = table_ax.table(cellText=table_data, colLabels=["Index", "Région"], 
                        cellLoc="center", loc="center")
 
 table.auto_set_font_size(False)
-table.set_fontsize(9)  # 🔹 Augmenter la taille du texte
-table.scale(1.5, 1.5)  # 🔹 Agrandir la table en largeur et hauteur
+table.set_fontsize(8)  # Ajustez la taille de la police
+table.scale(1.2, 1.2)  # Ajustez l'échelle du tableau
+
+# 🔹 Changement de l'arrière-plan en noir et texte en blanc et gras 🔹
+fig.patch.set_facecolor('black')  
+ax.set_facecolor('black')
+
+# Changer les couleurs des axes et des labels
+ax.xaxis.label.set_color('white')
+ax.yaxis.label.set_color('white')
+ax.zaxis.label.set_color('white')
+ax.title.set_color('white')
+
+# Mettre les labels et les ticks en blanc et en gras
+ax.xaxis.label.set_fontweight('bold')
+ax.yaxis.label.set_fontweight('bold')
+ax.zaxis.label.set_fontweight('bold')
+ax.title.set_fontweight('bold')
+
+ax.tick_params(axis='x', colors='white')
+ax.tick_params(axis='y', colors='white')
+ax.tick_params(axis='z', colors='white')
+
+# Changer la couleur du tableau et du texte
+table_ax.set_facecolor('black')
+for key, cell in table._cells.items():
+    cell.set_facecolor('black')  # Fond noir
+    cell.set_edgecolor('white')  # Bordures blanches
+    cell.set_text_props(color='white', fontweight='bold')  # Texte blanc et gras
 
 # Fonction d'animation pour la rotation
 def update(frame):
@@ -62,5 +95,30 @@ def update(frame):
 # Création de l'animation
 ani = animation.FuncAnimation(fig, update, frames=np.arange(0, 360, 2), interval=50)
 
-# Afficher le graphique animé
+# 🔹 METTRE LA FENÊTRE EN MODE FENÊTRÉ (NI MAXIMISÉ, NI PLEIN ÉCRAN) 🔹
+root = tk.Tk()
+root.withdraw()  # Cacher la fenêtre Tkinter
+plt.get_current_fig_manager().window.resizable(False, False)  # Taille fixe
+
+
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+root.destroy()
+
+
+manager = plt.get_current_fig_manager()
+
+
+manager.window.update_idletasks() 
+window_width = manager.window.winfo_width()
+window_height = manager.window.winfo_height()
+
+
+window_x = 15  
+window_y = screen_height // 5  
+
+
+manager.window.geometry(f"+{window_x}+{window_y}")
+
+
 plt.show()

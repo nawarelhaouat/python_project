@@ -13,12 +13,13 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Generative Art avec Pygame")
 
 # Charger le son depuis le dossier sounds/
-sound_path = os.path.join(os.path.dirname(__file__), "sounds", "click.wav")
+sound_path = os.path.join(os.path.dirname(__file__), "sounds", "click.wav")  # Correction de _file_ -> __file__
 try:
+    pygame.mixer.init()  # Initialisation du mixer
     sound = pygame.mixer.Sound(sound_path)
-    print("✅ Son chargé avec succès !")
+    print("Son chargé avec succès !")
 except pygame.error:
-    print("❌ Erreur : Fichier 'click.wav' introuvable ! Vérifie son emplacement.")
+    print("Erreur : Fichier 'click.wav' introuvable ! Vérifie son emplacement.")
     sound = None
 
 # Définition des couleurs et des formes
@@ -31,7 +32,7 @@ if not os.path.exists(image_folder):
     os.makedirs(image_folder)
 
 class Forme:
-    def __init__(self):
+    def __init__(self):  # Correction de _init_ -> __init__
         self.couleur = random.choice(colors)
         self.position = [random.randint(50, WIDTH-50), random.randint(50, HEIGHT-50)]
         self.selected = False
@@ -40,7 +41,7 @@ class Forme:
         pass
 
 class Carre(Forme):
-    def __init__(self):
+    def __init__(self):  # Correction de _init_ -> __init__
         super().__init__()
         self.size = random.randint(20, 100)
 
@@ -48,7 +49,7 @@ class Carre(Forme):
         pygame.draw.rect(screen, pygame.Color(self.couleur), (*self.position, self.size, self.size))
 
 class Cercle(Forme):
-    def __init__(self):
+    def __init__(self):  # Correction de _init_ -> __init__
         super().__init__()
         self.rayon = random.randint(20, 50)
 
@@ -56,7 +57,7 @@ class Cercle(Forme):
         pygame.draw.circle(screen, pygame.Color(self.couleur), self.position, self.rayon)
 
 class Triangle(Forme):
-    def __init__(self):
+    def __init__(self):  # Correction de _init_ -> __init__
         super().__init__()
         self.size = random.randint(30, 80)
 
@@ -66,7 +67,7 @@ class Triangle(Forme):
         pygame.draw.polygon(screen, pygame.Color(self.couleur), points)
 
 class Pentagone(Forme):
-    def __init__(self):
+    def __init__(self):  # Correction de _init_ -> __init__
         super().__init__()
         self.size = random.randint(30, 70)
 
@@ -80,6 +81,30 @@ class Pentagone(Forme):
 
 # Génération des formes
 formes = [random.choice([Carre, Cercle, Triangle, Pentagone])() for _ in range(20)]
+
+# Ajout de particules flottantes
+class Particle:
+    def __init__(self):  # Correction de _init_ -> __init__
+        self.position = [random.randint(0, WIDTH), random.randint(0, HEIGHT)]
+        self.color = random.choice(colors)
+        self.size = random.randint(2, 5)
+        # Vitesse réduite pour un déplacement plus lent
+        self.speed = [random.uniform(-0.2, 0.2), random.uniform(-0.2, 0.2)]
+
+    def update(self):
+        self.position[0] += self.speed[0]
+        self.position[1] += self.speed[1]
+        # Rebondir sur les bords de l'écran
+        if self.position[0] < 0 or self.position[0] > WIDTH:
+            self.speed[0] *= -1
+        if self.position[1] < 0 or self.position[1] > HEIGHT:
+            self.speed[1] *= -1
+
+    def draw(self):
+        pygame.draw.circle(screen, pygame.Color(self.color), (int(self.position[0]), int(self.position[1])), self.size)
+
+# Créer une liste de particules
+particles = [Particle() for _ in range(100)]
 
 def jouer_son():
     if sound:
@@ -104,9 +129,21 @@ def deselectionner_formes():
         forme.selected = False
     selected_forme = None
 
+# Boucle principale
 running = True
 while running:
-    screen.fill((0, 0, 0))  # Remplir l'écran avant de dessiner les formes
+    screen.fill((0, 0, 0))  # Remplir l'écran avec un fond noir
+
+    # Mettre à jour et dessiner les particules
+    for particle in particles:
+        particle.update()
+        particle.draw()
+
+    # Dessiner les formes
+    for forme in formes:
+        forme.dessiner()
+
+    # Gestion des événements
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -134,9 +171,6 @@ while running:
             if selected_forme:
                 selected_forme.position = list(event.pos)
 
-    for forme in formes:
-        forme.dessiner()
-    
     pygame.display.flip()
 
 pygame.quit()
