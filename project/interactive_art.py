@@ -1,7 +1,6 @@
 import pygame
 import random
 import os
-from datetime import datetime
 import math
 
 # Initialisation de pygame
@@ -13,26 +12,117 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Generative Art avec Pygame")
 
 # Charger le son depuis le dossier sounds/
-sound_path = os.path.join(os.path.dirname(__file__), "sounds", "click.wav")  # Correction de _file_ -> __file__
+sound_path = os.path.join(os.path.dirname(__file__), "sounds", "click.wav")
 try:
-    pygame.mixer.init()  # Initialisation du mixer
+    pygame.mixer.init()
     sound = pygame.mixer.Sound(sound_path)
     print("Son chargé avec succès !")
 except pygame.error:
     print("Erreur : Fichier 'click.wav' introuvable ! Vérifie son emplacement.")
     sound = None
 
+# Charger la police artistique
+font_path = os.path.join(os.path.dirname(__file__), "fonts", "artistic.ttf")
+if os.path.exists(font_path):
+    font = pygame.font.Font(font_path, 30)  # Police stylisée avec taille 50
+else:
+    print("⚠️ Police 'artistic.ttf' introuvable ! Utilisation de la police par défaut.")
+    font = pygame.font.Font(None, 50)  # Si la police n'est pas trouvée, on utilise celle par défaut
+
+# Classe pour les papillons animés
+class Papillon:
+    def __init__(self):
+        self.x = random.randint(0, WIDTH)
+        self.y = random.randint(0, HEIGHT)
+        self.size = random.randint(20, 40)
+        self.color = (random.randint(200, 255), random.randint(100, 200), random.randint(100, 200))
+        self.speed_x = random.choice([-2, -1, 1, 2])
+        self.speed_y = random.choice([-2, -1, 1, 2])
+        self.angle = 0
+
+    def dessiner(self):
+        # Dessiner les ailes du papillon
+        pygame.draw.ellipse(screen, self.color, (self.x, self.y, self.size, self.size // 2))
+        pygame.draw.ellipse(screen, self.color, (self.x + self.size // 2, self.y, self.size, self.size // 2))
+        # Dessiner le corps
+        pygame.draw.line(screen, (0, 0, 0), (self.x + self.size // 2, self.y + self.size // 4),
+                         (self.x + self.size // 2, self.y + self.size // 2), 2)
+
+    def bouger(self):
+        self.x += self.speed_x
+        self.y += self.speed_y
+        # Rebondir sur les bords de l'écran
+        if self.x <= 0 or self.x >= WIDTH:
+            self.speed_x *= -1
+        if self.y <= 0 or self.y >= HEIGHT:
+            self.speed_y *= -1
+
+# Fonction pour afficher l'écran d'explication avec animation et style artistique
+def afficher_explication():
+    screen.fill((0, 0, 0))  # Fond noir
+
+    explications = [
+        "WELCOME TO THE GAME!",
+        "Left Click : Pick or drop a shape",
+        "Press C : New color",
+        "Press S : Remove",
+        "Press A : Bigger",
+        "Press P : Smaller",
+        "Press F : New shape",
+        "ENTER"
+    ]
+
+    y_offset = HEIGHT // 6
+    alpha = 0  # Opacité du texte (animation)
+
+    # Créer des papillons
+    papillons = [Papillon() for _ in range(10)]
+
+    clock = pygame.time.Clock()
+    running = True
+
+    while running:
+        screen.fill((0, 0, 0))  # Arrière-plan noir
+
+        # Dessiner les papillons
+        for papillon in papillons:
+            papillon.dessiner()
+            papillon.bouger()
+
+        # Dessiner le texte avec animation
+        text_surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
+        for i, ligne in enumerate(explications):
+            texte = font.render(ligne, True, (255, 255, 255, alpha))
+            text_rect = texte.get_rect(center=(WIDTH // 2, y_offset + i * 60))  # Espacement ajusté
+            text_surface.blit(texte, text_rect)
+
+        screen.blit(text_surface, (0, 0))
+        pygame.display.flip()
+
+        if alpha < 255:
+            alpha += 5  # Animation de fondu
+        else:
+            alpha = 255
+
+        clock.tick(30)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    running = False
+
+# Attendre que l'utilisateur appuie sur "Entrée" pour démarrer
+afficher_explication()
+
 # Définition des couleurs et des formes
 colors = ["cyan", "magenta", "lime", "orange", "gold", "violet", "deepskyblue", "springgreen", "hotpink", "coral"]
 selected_forme = None
 
-# Dossier de sauvegarde des images
-image_folder = "static/"
-if not os.path.exists(image_folder):
-    os.makedirs(image_folder)
-
 class Forme:
-    def __init__(self):  # Correction de _init_ -> __init__
+    def __init__(self):
         self.couleur = random.choice(colors)
         self.position = [random.randint(50, WIDTH-50), random.randint(50, HEIGHT-50)]
         self.selected = False
@@ -41,7 +131,7 @@ class Forme:
         pass
 
 class Carre(Forme):
-    def __init__(self):  # Correction de _init_ -> __init__
+    def __init__(self):
         super().__init__()
         self.size = random.randint(20, 100)
 
@@ -49,7 +139,7 @@ class Carre(Forme):
         pygame.draw.rect(screen, pygame.Color(self.couleur), (*self.position, self.size, self.size))
 
 class Cercle(Forme):
-    def __init__(self):  # Correction de _init_ -> __init__
+    def __init__(self):
         super().__init__()
         self.rayon = random.randint(20, 50)
 
@@ -57,7 +147,7 @@ class Cercle(Forme):
         pygame.draw.circle(screen, pygame.Color(self.couleur), self.position, self.rayon)
 
 class Triangle(Forme):
-    def __init__(self):  # Correction de _init_ -> __init__
+    def __init__(self):
         super().__init__()
         self.size = random.randint(30, 80)
 
@@ -67,7 +157,7 @@ class Triangle(Forme):
         pygame.draw.polygon(screen, pygame.Color(self.couleur), points)
 
 class Pentagone(Forme):
-    def __init__(self):  # Correction de _init_ -> __init__
+    def __init__(self):
         super().__init__()
         self.size = random.randint(30, 70)
 
@@ -82,34 +172,12 @@ class Pentagone(Forme):
 # Génération des formes
 formes = [random.choice([Carre, Cercle, Triangle, Pentagone])() for _ in range(20)]
 
-# Ajout de particules flottantes
-class Particle:
-    def __init__(self):  # Correction de _init_ -> __init__
-        self.position = [random.randint(0, WIDTH), random.randint(0, HEIGHT)]
-        self.color = random.choice(colors)
-        self.size = random.randint(2, 5)
-        # Vitesse réduite pour un déplacement plus lent
-        self.speed = [random.uniform(-0.2, 0.2), random.uniform(-0.2, 0.2)]
-
-    def update(self):
-        self.position[0] += self.speed[0]
-        self.position[1] += self.speed[1]
-        # Rebondir sur les bords de l'écran
-        if self.position[0] < 0 or self.position[0] > WIDTH:
-            self.speed[0] *= -1
-        if self.position[1] < 0 or self.position[1] > HEIGHT:
-            self.speed[1] *= -1
-
-    def draw(self):
-        pygame.draw.circle(screen, pygame.Color(self.color), (int(self.position[0]), int(self.position[1])), self.size)
-
-# Créer une liste de particules
-particles = [Particle() for _ in range(100)]
-
+# Fonction pour jouer un son
 def jouer_son():
     if sound:
         sound.play()
 
+# Fonction pour détecter les clics sur les formes
 def detection(x, y):
     global selected_forme
     for objet in formes:
@@ -123,27 +191,35 @@ def detection(x, y):
     formes.append(nouvel_objet)
     jouer_son()
 
+# Fonction pour désélectionner toutes les formes
 def deselectionner_formes():
     global selected_forme
     for forme in formes:
         forme.selected = False
     selected_forme = None
 
+def changer_forme():
+    global selected_forme
+    if selected_forme:
+        formes.remove(selected_forme)
+        nouvelle_forme = random.choice([Carre, Cercle, Triangle, Pentagone])()
+        nouvelle_forme.position = selected_forme.position
+        nouvelle_forme.couleur = selected_forme.couleur
+        if isinstance(selected_forme, (Carre, Triangle, Pentagone)):
+            nouvelle_forme.size = selected_forme.size
+        elif isinstance(selected_forme, Cercle):
+            nouvelle_forme.rayon = selected_forme.rayon
+        formes.append(nouvelle_forme)
+        selected_forme = nouvelle_forme
+
 # Boucle principale
 running = True
 while running:
-    screen.fill((0, 0, 0))  # Remplir l'écran avec un fond noir
+    screen.fill((0, 0, 0))  # Fond noir
 
-    # Mettre à jour et dessiner les particules
-    for particle in particles:
-        particle.update()
-        particle.draw()
-
-    # Dessiner les formes
     for forme in formes:
         forme.dessiner()
 
-    # Gestion des événements
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -158,15 +234,11 @@ while running:
                     formes.remove(selected_forme)
                     deselectionner_formes()
                 elif event.key == pygame.K_a:
-                    if isinstance(selected_forme, (Carre, Triangle, Pentagone)):
-                        selected_forme.size *= 1.2
-                    elif isinstance(selected_forme, Cercle):
-                        selected_forme.rayon *= 1.2
+                    selected_forme.size *= 1.2
                 elif event.key == pygame.K_p:
-                    if isinstance(selected_forme, (Carre, Triangle, Pentagone)):
-                        selected_forme.size *= 0.8
-                    elif isinstance(selected_forme, Cercle):
-                        selected_forme.rayon *= 0.8
+                    selected_forme.size *= 0.8
+                elif event.key == pygame.K_f:
+                    changer_forme()
         elif event.type == pygame.MOUSEMOTION and pygame.mouse.get_pressed()[0]:
             if selected_forme:
                 selected_forme.position = list(event.pos)
