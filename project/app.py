@@ -4,11 +4,15 @@ from datetime import datetime
 from pydub import AudioSegment
 from image_processing import apply_grayscale, apply_blur, apply_glitch, apply_invert, apply_sepia, apply_pixelate
 app = Flask(__name__)
+from style_transfer import apply_style_transfer
+
 
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 app.config['PROCESSED_FOLDER'] = 'static/processed'
 
+
 # Ensure folders exist
+
 
 
 # Load audio file
@@ -157,6 +161,33 @@ def gallery():
 def visualization():
     os.system("python visualization.py")  # Exécute visualization.py
     return "<script>window.history.back();</script>"
+
+@app.route('/style_transfer', methods=['GET', 'POST'])
+def style_transfer():
+    if request.method == 'GET':
+        return render_template("style_transfer.html")
+
+    if 'content' not in request.files or 'style' not in request.files:
+        return redirect(url_for('style_transfer'))
+    
+    content_file = request.files['content']
+    style_file = request.files['style']
+    
+    if content_file.filename == '' or style_file.filename == '':
+        return redirect(url_for('style_transfer'))
+    
+    content_path = os.path.join(app.config['UPLOAD_FOLDER'], content_file.filename)
+    style_path = os.path.join(app.config['UPLOAD_FOLDER'], style_file.filename)
+    output_path = os.path.join(app.config['PROCESSED_FOLDER'], f"styled_{content_file.filename}")
+    
+    content_file.save(content_path)
+    style_file.save(style_path)
+    
+    apply_style_transfer(content_path, style_path, output_path)
+    
+    return render_template("style_transfer.html", output_image=output_path)
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
