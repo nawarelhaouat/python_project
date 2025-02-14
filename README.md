@@ -1,5 +1,8 @@
 # python_project_Interactive Generative Art Gallery
 
+## 📄 Project Report & 🎥 Descriptive Video :
+https://drive.google.com/drive/folders/1yWV1oqOv3y-enQFMt7qK8auAbUkA_-yK?usp=drive_link
+
 Once you launch the Interactive Generative Art Gallery, you can explore and interact with various digital art forms.  
 This project integrates generative art, image and audio manipulation, and interactive visualizations** within a web-based platform.  
 
