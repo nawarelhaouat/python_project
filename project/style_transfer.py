@@ -1,4 +1,5 @@
 import torch
+torch.multiprocessing.set_start_method('spawn', force=True)
 import torch.optim as optim
 import torchvision.transforms as transforms
 import torchvision.models as models

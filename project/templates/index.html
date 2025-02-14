@@ -6,6 +6,7 @@
         * {
             margin: 0;
             padding: 0;
+            font-family: 'Georgia';
         }
         body {
             background: linear-gradient(rgba(1, 1, 1, 0.95), rgba(0.5, 0.5, 0.5, 0.6)), 
@@ -18,11 +19,11 @@
         a {
             text-decoration: none;
             color: white;
+            margin: 0 20px;
         }
         nav {
             width: 100%;
             display: flex;
-            
         }
         nav h1 {
             width: 40%;
@@ -32,8 +33,6 @@
             width: 60%;
             display: inline-block;
             text-align: center;
-            
-
         }
         nav ul li {
             display: inline-block;
@@ -42,138 +41,99 @@
             padding: 10px;
             font-weight: bold;
         }
+        nav ul li:hover {
+            scale : 1.2;
+            color: #6A082A;
+        }
+        nav ul li a:hover {  
+            color: #6A082A;
+        }
         .container {
             width: 80%;
             margin: 20px auto;
-        }
-        .container h1{
-            font-size: 70px;
-            width: 100%;
             text-align: center;
+        }
+        .container h1 {
+            font-size: 70px;
             letter-spacing: 10px;
             font-family: 'Broadway';
-            margin: 20px auto;
+            margin: 50px auto;
         }
         .container p {
-            text-align: center;
-            margin-top: 15px;
+            margin-top: 0px;
             margin-bottom: 25px;
             font-size: 16px;
             line-height: 25px;
         }
-        .forms {
+        .button-container {
             display: flex;
-            width: 100%;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 60px;
         }
-        button {
+        button, .menu-item, .custom-file-input, label.custom-file-input {
             padding: 15px 30px;
-            border: 1px solid burlywood;
+            border: 2px solid #6A082A;
             background: none;
-            margin: 20px;
-            color: white;
-            font-weight: bold;
-            border-radius: 20px;
-        }
-        footer {
-            padding: 10px 0;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-        footer p {
-            margin-left: 20px;
-        }
-
-        input[type="file"] {
-            display: none;
-         }
-
-        .custom-file-input {
-            padding: 15px 30px;
-            border: 1px solid #6A082A;
-            background: none;
-            margin: 20px;
             color: white;
             font-weight: bold;
             border-radius: 20px;
             cursor: pointer;
+            text-align: center;
+            font-family: inherit;
+            font-size: 16px;
+            display: inline-block;
         }
-
-    button[type="submit"], .menu-item {
-        padding: 15px 30px;
-        border: 2px solid #6A082A;
-        background: none;
-        margin: 10px;
-        color: white;
-        font-weight: bold;
-        border-radius: 20px;
-        cursor: pointer;
-    }
-    button[type="submit"]:hover, .menu-item:hover{
-        background-color: #6A082A;
-    }
-
-
-        
+        button:hover, .menu-item:hover, .custom-file-input:hover, label.custom-file-input:hover {
+            background-color: #6A082A;
+            transform: scale(1.2);
+            transition: transform 0.3s ease-in-out;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        form {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 15px;
+        }
+        footer {
+            padding: 10px 20px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
     <nav>
-        <h1>Digital creativity</h1>
+        <h1>Digital Creativity</h1>
         <ul>
             <li><a style="color: #6A082A;" href="#">Home</a></li>
-            <li><a href="{{ url_for('view_images') }}">Gallery</a></li>            <li><a href="#">Account</a></li>
+            <li><a href="{{ url_for('view_images') }}">Gallery</a></li>
+            <li><a href="#">Account</a></li>
         </ul>
     </nav>
 
-    <section style="display:flex;width:100%;">
-        <div class="container">
-            <h1>Generative  <br> Gallery</h1>
-            <p>Welcome to Generative Gallery , an interactive platform where you can unleash your artistic vision. This gallery allows you to create, modify, and explore generative art and data visualizations with ease. Use our interactive tools to draw, add shapes, change colors, and apply filters to your images. Upload your own images and audio files to see them transformed into unique visual representations. Navigate through the gallery, interact with your creations, and experiment with different styles. Whether you're an artist, designer, or just exploring creativity, this space is designed for you. Start creating and let your imagination flow!</p>
-        </div>
-   <!--     <div style="width:40%;position:relative;">
-            <img style="width:80%;height:500px;margin: 0 0 0 -40px;position:absolute;right:0;display:left;" src="../static/images/pp.png">
-
-        </div> -->
+    <section class="container">
+        <h1>Generative  <br> Gallery</h1>
+        <p>Welcome to Generative Gallery, an interactive platform where you can unleash your artistic vision. This gallery allows you to create, modify, and explore generative art and data visualizations with ease. Use our interactive tools to draw, add shapes, change colors, and apply filters to your images. Upload your own images and audio files to see them transformed into unique visual representations. Navigate through the gallery, interact with your creations, and experiment with different styles. Whether you're an artist, designer, or just exploring creativity, this space is designed for you. Start creating and let your imagination flow!</p>
     </section>
-    <section class="forms">
-        <form action="/upload_image" method="post" enctype="multipart/form-data">
-            <input type="file" name="image" id="file" accept="image/*">
-            <label style="background-color: #6A082A;" for="file" class="custom-file-input">Choose an Image</label>
-            <button type="submit">Upload Image</button>
-        </form>
-        
-        <form class="/upload-form" method="POST" enctype="multipart/form-data">
-            <input type="file" name="file" id="file1" accept="audio/*" required>
-            <label style="background-color: #6A082A;" for="file1" class="custom-file-input">Choose an Audio File</label>
-            <button type="submit" class="button">Upload Audio</button>
-         </form>
 
-
-        <!--
-          <form class="upload-form" method="POST" enctype="multipart/form-data">
-            <input type="file" name="file" accept="audio/*" required>
-            <button type="submit" class="button">Upload Audio</button>
-        </form>
-    -->
-        <a href="/visualization" class="menu-item">View Data Visualisation</a>
-
-        <a href="/draw" class="menu-item">Generate Art</a>
-
+    <div class="button-container">
+        <a href="{{ url_for('image_processing') }}" class="menu-item">Image Processing</a>
+        <a href="{{ url_for('audio_processing') }}" class="menu-item">Audio Processing</a>
+        <a href="/visualization" class="menu-item">Data Visualization</a>
+        <a href="/draw" class="menu-item">Digital Art</a>
         <a href="{{ url_for('style_transfer') }}" class="menu-item">Style Transfer</a>
-
-
-      <!--  <form action="/upload_image" method="post" enctype="multipart/form-data">
-            <button type="submit">View Data Visualisation</button>
-        </form>
-        <form action="/upload_image" method="post" enctype="multipart/form-data">
-            <button type="submit">Generate Art</button>
-        </form>
-        -->
-    </section>
+    </div>
 
     <footer>
-        <p>&copy 2025 by Nawar El Haouat & Nada El Oukili</p>
+        <p>&copy; 2025 by Nawar El Haouat & Nada El Oukili</p>
     </footer>
 </body>
 </html>

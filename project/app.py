@@ -6,9 +6,13 @@ from image_processing import apply_grayscale, apply_blur, apply_glitch, apply_in
 app = Flask(__name__)
 from style_transfer import apply_style_transfer
 
+UPLOAD_FOLDER = 'static/uploads'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-app.config['UPLOAD_FOLDER'] = 'static/uploads'
-app.config['PROCESSED_FOLDER'] = 'static/processed'
+PROCESSED_FOLDER = 'static/processed'
+
+app.config['PROCESSED_FOLDER'] = PROCESSED_FOLDER
 
 
 # Ensure folders exist
@@ -58,75 +62,100 @@ def generate_soundscape():
 def index():
     return render_template("index.html")
 
-@app.route("/upload_image", methods=["POST"])
+@app.route('/upload', methods=['POST'])
 def upload_image():
-    if 'image' not in request.files:
-        return redirect(url_for('index'))
-    file = request.files['image']
-    if file.filename == '':
-        return redirect(url_for('index'))
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-    file.save(filepath)
-    return render_template("gallery.html", image=file.filename)
+    if 'file' not in request.files:
+        return redirect(url_for('image_processing'))  
 
+    file = request.files['file']
+    if file.filename == '':
+        return redirect(url_for('image_processing'))
+
+    if file:
+        filename = file.filename
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(file_path)
+        return redirect(url_for('image_processing', image=filename))
+
+@app.route('/image_processing')
+def image_processing():
+    image_filename = request.args.get('image', '')  
+    result_image_filename = request.args.get('result_image', '')
+    return render_template('image_processing.html', image=image_filename, result_image=result_image_filename)
+    
 @app.route("/apply_filter/<filter_name>/<filename>")
 def apply_filter(filter_name, filename):
     input_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    output_path = os.path.join(app.config['UPLOAD_FOLDER'], f"{filter_name}_{filename}")
+    output_filename = f"{filter_name}_{filename}"
+    output_path = os.path.join(app.config['UPLOAD_FOLDER'], output_filename)
+    
+    # Apply the corresponding filter
     if filter_name == "grayscale":
         apply_grayscale(input_path, output_path)
     elif filter_name == "blur":
         apply_blur(input_path, output_path)
     elif filter_name == "glitch":
         apply_glitch(input_path, output_path)
-    ############################################################
     elif filter_name == "invert":
         apply_invert(input_path, output_path)
     elif filter_name == "sepia":
         apply_sepia(input_path, output_path)
     elif filter_name == "pixelate":
         apply_pixelate(input_path, output_path)
-    ############################################################
-    return render_template("view_art.html", image=f"{filter_name}_{filename}")
+    return redirect(url_for('image_processing', image=filename, result_image=output_filename))
 
-@app.route('/', methods=["POST"])
-def upload_audio():
-    file = request.files.get('file')
-    if not file or file.filename == '':
-        return "No file selected", 400
 
-    if file.filename == '':
-        return "File format not allowed", 400
-    
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-    file.save(filepath)
 
-    return redirect(url_for('audio_processing', filename=file.filename))
+# Route for uploading, processing, and displaying audio on the same page
+@app.route('/audio_processing', methods=['GET', 'POST'])
+def audio_processing():
+    filename = None
+    processed_filename = None
 
-@app.route('/audio_processing/<filename>')
-def audio_processing(filename):
-    return render_template('audio_processing.html', filename=filename)
+    if request.method == 'POST':
+        # Check if the user uploaded a file
+        if 'file' in request.files:
+            file = request.files['file']
+            if file and file.filename:
+                filename = file.filename
+                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                file.save(filepath)
 
-@app.route('/apply_effect/<effect>/<filename>')
-def apply_audio_effect(effect, filename):
-    input_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    output_path = os.path.join(app.config['PROCESSED_FOLDER'], f"{effect}_{filename}")
+        # Check if the user applied an effect
+        if 'effect' in request.form and 'filename' in request.form:
+            effect = request.form['effect']
+            filename = request.form['filename']
+            input_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
-    # Load and apply effect
-    audio = load_audio(filename)
-    processed_audio = apply_effect(audio, effect)
-    processed_audio.export(output_path, format="mp3")
+            if os.path.exists(input_path):
+                audio = load_audio(filename)
+                processed_audio = apply_effect(audio, effect)
 
-    return send_from_directory(app.config['PROCESSED_FOLDER'], f"{effect}_{filename}")
+                processed_filename = f"{effect}_{filename}"
+                output_path = os.path.join(app.config['PROCESSED_FOLDER'], processed_filename)
+                processed_audio.export(output_path, format="mp3")
 
-@app.route('/generate_soundscape')
+    return render_template('audio_processing.html', filename=filename, processed_filename=processed_filename)
+
+# Route to serve audio files
+@app.route('/static/uploads/<filename>')
+def serve_uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+@app.route('/static/processed/<filename>')
+def processed_file(filename):
+    return send_from_directory(app.config['PROCESSED_FOLDER'], filename)
+
+@app.route('/generate_audio_soundscape', methods=['GET', 'POST'])
 def generate_audio_soundscape():
-    soundscape = generate_soundscape()
+    soundscape = generate_soundscape()  # Call function to create soundscape
+
     if soundscape:
         output_path = os.path.join(app.config['PROCESSED_FOLDER'], "soundscape.mp3")
         soundscape.export(output_path, format="mp3")
-        return send_from_directory(app.config['PROCESSED_FOLDER'], "soundscape.mp3")
-    return "Error generating soundscape", 500
+        return redirect(url_for('audio_processing', soundscape_created=True))
+    else:
+        return "Soundscape generation failed. Make sure required files exist.", 400
 
 
 @app.route('/view_images')

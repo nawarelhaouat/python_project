@@ -114,7 +114,8 @@ window_width = manager.window.winfo_width()
 window_height = manager.window.winfo_height()
 
 
-window_x = 15  
+window_x = 15
+ 
 window_y = screen_height // 5  
 
 

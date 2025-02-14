@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0; 
+            box-sizing: border-box;
+            font-family: 'Georgia';
+        }
+        body {
+            background: linear-gradient(rgba(1, 1, 1, 0.95), rgba(0.5, 0.5, 0.5, 0.6)), 
+            url('../static/images/img1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            text-align: center;
+        }
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: white;
+            text-shadow: 2px 2px 5px #6A082A;
+            letter-spacing: 4px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #6A082A;
+            display: inline-block;
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px; /* Espacement entre les boutons conservé */
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .button-container button[type="submit"] {
+            margin-left: 130px; /* Espacement inchangé */
+        }
+        .custom-button {
+            padding: 15px 30px;
+            width: 200px;
+            text-align: center;
+            border: 2px solid #6A082A;
+            background: none;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, background 0.3s;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .custom-button:hover {
+            background-color: #6A082A;
+            transform: scale(1.2);
+        }
+        input[type="file"] {
+            display: none;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 90px; /* Espacement entre les cadres conservé */
+            margin-top: 30px;
+        }
+
+        .box {
+            width: 280px;
+            height: 280px;
+            border: 2px solid #6A082A;
+            border-radius: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Empêche le débordement de l'image */
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Assure que l'image couvre entièrement le cadre */
+            border-radius: 18px; /* Ajuste les bords de l'image */
+            display: block;
+        }
+
+        /* Descendre le bouton "Back to Home" */
+        .space-before-home {
+            height: 10px; /* Ajuste cette valeur pour descendre plus ou moins */
+        }
+    </style>
+</head>
+<body>
+    <h1>APPLY A FILTER TO AN IMAGE</h1>
+
+    <form action="{{ url_for('upload_image') }}" method="post" enctype="multipart/form-data">
+        <div class="button-container">
+            <label for="file-upload" class="custom-button">Choose a File</label>
+            <input type="file" name="file" id="file-upload" required>
+            <button type="submit" class="custom-button">Upload</button>
+        </div>
+    </form>
+
+    <div class="container">
+        <div class="box">
+            {% if image %}
+                <img src="{{ url_for('static', filename='uploads/' + image) }}">
+            {% endif %}
+        </div>
+
+        <div class="box">
+            {% if result_image %}
+                <img src="{{ url_for('static', filename='uploads/' + result_image) }}">
+            {% endif %}
+        </div>
+    </div>
+
+    <br>
+
+    <div class="button-container">
+        <a href="{{ url_for('apply_filter', filter_name='grayscale', filename=image) }}" class="custom-button">Apply Grayscale</a>
+        <a href="{{ url_for('apply_filter', filter_name='blur', filename=image) }}" class="custom-button">Apply Blur</a>
+        <a href="{{ url_for('apply_filter', filter_name='glitch', filename=image) }}" class="custom-button">Apply Glitch</a>
+        <a href="{{ url_for('apply_filter', filter_name='invert', filename=image) }}" class="custom-button">Apply Invert</a>
+        <a href="{{ url_for('apply_filter', filter_name='sepia', filename=image) }}" class="custom-button">Apply Sepia</a>
+        <a href="{{ url_for('apply_filter', filter_name='pixelate', filename=image) }}" class="custom-button">Apply Pixelate</a>
+    </div>
+
+    <br>
+    
+    <!-- Ajout d'un div vide pour descendre le bouton Back to Home -->
+    <div class="space-before-home"></div>
+
+    <!-- Bouton Back to Home avec effet scale -->
+    <a href="{{ url_for('index') }}" class="custom-button">Back to Home</a>
+
+</body>
+</html>

@@ -2,85 +2,179 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" file="width=device-width, initial-scale=1.0">
     <title>Audio Processing</title>
     <style>
         * {
             margin: 0;
             padding: 0;
+            font-family: 'Georgia';
         }
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(rgba(1, 1, 1, 0.95), rgba(0.5, 0.5, 0.5, 0.7)), 
+            background: linear-gradient(rgba(1, 1, 1, 0.95), rgba(0.5, 0.5, 0.5, 0.6)), 
             url('../static/images/img1.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 30px;
         }
+        
         .container {
-            margin: 0 auto;
-            text-align: center;
-        }
-        h1, p {
-            margin-top: 30px;
-        }
-        p {
-            margin-bottom: 80px;
-        }
-        h2 {
+            display: flex;
+            justify-file: center;
+            gap: 50px;
             margin-top: 40px;
-            color: #6A082A;
+            margin-bottom: 10px;
         }
-        .button {
-            display: inline-block;
-            color: white;
-            text-decoration: none;
-            padding: 15px 30px;
-            border: 1px solid #6A082A;
-            background: none;
-            margin: 40px 20px;
-            font-weight: bold;
+        .box {
+            width: 400px;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border: 2px solid #6A082A;
             border-radius: 20px;
-        }
-        .button:hover {
-            background-color: #6A082A;
-        }
-        .btn {
-            margin: 50px auto;
             text-align: center;
+            background-color: rgba(255, 255, 255, 0.1);
         }
-        .back-button {
-            text-decoration: none;
-            padding: 15px 50px;
+
+        h1 {
+            font-size: 40px;
             font-weight: bold;
-            font-size: 16px;
-            color:white;
-            
+            text-transform: uppercase;
+            color: rgb(255, 255, 255);
+            text-shadow: 3px 3px 5px rgba(255, 51, 102, 0.5);
+            letter-spacing: 2px;
+            padding: 20px;
+            border-bottom: 4px solid #6A082A;
+            display: inline-block;
         }
-        .back-button:hover {
-            color: #6A082A;
-        }
+        input[type="file"] {
+            display: none;
+        }
+        label {
+            display: block;
+        }
+        h2, label {
+            font-size: 23px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #ffffff;
+            letter-spacing: 3px;
+            padding: 5px;
+            margin: 30px auto;
+        }
+        a.btn {
+            display: inline-block; /* Permet au transform de s'appliquer correctement */
+        }
+        .custom-btn, .btn, button[type="submit"] {
+            padding: 10px 20px;
+            border: 2px solid #6A082A;
+            background: none;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, background-color 0.3s, color 0.3s;
+            margin: 5px;
+        }
+        
+        .custom-btn:hover, a:hover, button[type="submit"]:hover {
+            background-color: #6A082A;
+            transform: scale(1.1);
+            transition: transform 0.3s ease-in-out;
+        }
+        .custom-btn:active, a:active, button[type="submit"]:active {
+            background-color: #9C1035;
+            transform: scale(1.1);
+        }
+        label:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s ease-in-out;
+            color: #9C1035;
+            cursor: pointer;
+        }
+        audio {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 10px;
+            background-color: none;
+            padding: 10px;
+            margin: 5px 0;
+        }
+        .h2 {
+            margin-top: 80px;
+        }
+        a {
+            text-decoration: none;
+        }
+        
     </style>
 </head>
 <body>
+    <h1>Apply an Effect to an Audio File</h1>
     <div class="container">
-        <h1>Audio Processing</h1>
-        <p>Uploaded File: {{ filename }}</p>
-
-        <!-- Apply Effects -->
-        <h2>Apply Effects</h2>
-        <a href="{{ url_for('apply_audio_effect', effect='speed_up', filename=filename) }}" class="button">Speed Up</a>
-        <a href="{{ url_for('apply_audio_effect', effect='fade', filename=filename) }}" class="button">Fade</a>
-        <a href="{{ url_for('apply_audio_effect', effect='reverse', filename=filename) }}" class="button">Reverse</a>
-        <a href="{{ url_for('apply_audio_effect', effect='louder', filename=filename) }}" class="button">Louder</a>
-
-        <!-- Generate Soundscape -->
-        <h2>Generate Soundscape</h2>
-        <a href="{{ url_for('generate_audio_soundscape') }}" class="button">Generate Soundscape</a>
+        <div class="box">
+            <form action="{{ url_for('audio_processing') }}" method="POST" enctype="multipart/form-data">
+                
+                <input type="file" name="file" id="file" accept="audio/*" required>
+                <label for="file">Import Audio</label>
+                <br>
+                <button type="submit">Upload Audio</button>
+            
+            </form>
+            <h2 class="h2">Uploaded Audio</h2>
+            {% if filename %}  
+                <audio controls>
+                    <source src="{{ url_for('uploaded_file', filename=filename) }}" type="audio/mp3">
+                    Your browser does not support the audio element.
+                </audio>
+            {% else %}
+                <audio controls></audio>
+            {% endif %}
+        </div>
+        <div class="box">
+            <h2>Apply Effects</h2>
+            <form action="{{ url_for('audio_processing') }}" method="POST">
+                <input type="hidden" name="filename" value="{{ filename }}">
+                <button type="submit" name="effect" value="speed_up">Speed Up</button>
+                <button type="submit" name="effect" value="fade">Fade In</button>
+                <button type="submit" name="effect" value="reverse">Reverse</button>
+                <button type="submit" name="effect" value="louder">Louder</button>
+            </form>
+            <h2>Processed Audio</h2>
+            {% if processed_filename %}
+                <audio controls>
+                    <source src="{{ url_for('processed_file', filename=processed_filename) }}" type="audio/mp3">
+                    Your browser does not support the audio element.
+                </audio>
+            {% else %}
+                <audio controls></audio>
+            {% endif %}
+        </div>
+        <div class="box">
+            <h2>Generate Soundscape</h2>
+            <form action="{{ url_for('generate_audio_soundscape') }}" method="POST">
+                <button type="submit">Generate Soundscape</button>
+            </form>
+            <h2 class="h2">Soundscape</h2>
+            {% if request.args.get('soundscape_created') %}
+                <audio controls>
+                    <source src="{{ url_for('processed_file', filename='soundscape.mp3') }}" type="audio/mp3">
+                    Your browser does not support the audio element.
+                </audio>
+            {% else %}
+                <audio controls></audio>
+            {% endif %}
+        </div>
     </div>
-    <div class="btn">
-        <a href="{{ url_for('index') }}" class="back-button">Back to Home</a>
-    </div>
+    <br>
+    <a class="btn" href="{{ url_for('index') }}">Back to Home</a>
 </body>
 </html>
